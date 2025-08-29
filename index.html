@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO-теги -->
+    <title>Бесплатный профосмотр в {{Городе}} — {{Название}}</title>
+    <meta name="description" content="Пройдите бесплатный профилактический медосмотр по полису ОМС в {{Название}}. Оставьте заявку, и мы вам перезвоним!">
+    <meta name="keywords" content="профосмотр, медосмотр, диспансеризация, бесплатно, ОМС, {{Город}}, {{Название}}">
+
+    <!-- Open Graph для соцсетей -->
+    <meta property="og:title" content="Бесплатный профосмотр в {{Городе}}">
+    <meta property="og:description" content="Заботьтесь о своем здоровье вовремя. Пройдите бесплатный медосмотр по ОМС.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{URL сайта}}">
+    <meta property="og:image" content="{{URL изображения для превью}}">
+
+    <!-- Favicons -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Шрифты и иконки -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Сброс стилей и базовые настройки */
+        :root {
+            --primary-color: #007B8A; /* Доверительный сине-зелёный */
+            --secondary-color: #28A745; /* Акцентный зелёный */
+            --text-color: #212529; /* Тёмно-серый текст */
+            --bg-light: #F8F9FA; /* Светло-серый фон */
+            --bg-white: #FFFFFF;
+            --border-color: #DEE2E6;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Контейнер и секции */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        /* Типографика */
+        h1, h2 {
+            font-weight: 700;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 2.75rem);
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 40px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .btn-primary:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* Hero-блок */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background-color: var(--bg-light);
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: #495057;
+            margin-bottom: 30px;
+        }
+
+        /* Формы */
+        .form-group {
+            width: 100%;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .form-control:focus {
+            outline: 2px solid var(--primary-color);
+            border-color: transparent;
+        }
+        
+        .application-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .privacy-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+
+        /* Блок "Почему это важно" */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .feature-item {
+            padding: 20px;
+        }
+
+        .feature-item svg {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Gemini Feature Section */
+        #gemini-feature {
+            background-color: #E0F2F1;
+        }
+        .gemini-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            align-items: flex-end;
+        }
+        .gemini-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+        #gemini-result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            display: none;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--primary-color);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: none;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        /* Блок "Что входит" */
+        .services-list {
+            list-style: none;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .services-list li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .services-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2328A745' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-check-circle-2'%3E%3Cpath d='M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+        }
+
+        /* Блок "Как записаться" */
+        .steps-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 15px;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 20px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-answer p {
+            padding: 0 0 20px;
+            text-align: left;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Контакты */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        @media (min-width: 768px) {
+            .contacts-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .contact-details ul {
+            list-style: none;
+        }
+        .contact-details li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .map-container {
+            width: 100%;
+            height: 300px;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .social-buttons a {
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: #adb5bd;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Закрепленная кнопка для мобильных */
+        .sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .sticky-cta .btn {
+            width: 100%;
+        }
+        @media (max-width: 767px) {
+            .sticky-cta {
+                display: block;
+            }
+            body {
+                padding-bottom: 80px;
+            }
+        }
+
+        /* СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2.2rem;
+            font-weight: 300;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            line-height: 1;
+        }
+        
+        .modal-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .modal-actions {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column; /* Changed to column */
+            align-items: center; /* Center items */
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .modal-actions .messenger-buttons {
+             display: flex;
+             gap: 15px;
+        }
+
+        .btn-social {
+            color: white !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-social.whatsapp { background-color: #25D366; }
+        .btn-social.whatsapp:hover:not(:disabled) { background-color: #1DA851; }
+        .btn-social.telegram { background-color: #0088cc; }
+        .btn-social.telegram:hover:not(:disabled) { background-color: #0077B3; }
+        .btn-social:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <h1>Проверьте здоровье вовремя — это бесплатно</h1>
+            <p>Профосмотр помогает выявить болезни на ранних стадиях. Запишитесь легко: оставьте номер, и мы позвоним вам сами.</p>
+            
+            <div id="form-container">
+                <form class="application-form" id="main-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Номер телефона" required pattern="[0-9\\s\\-\\(\\)\\+]{10,}" title="Введите корректный номер телефона">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Записаться бесплатно</button>
+                    <p class="privacy-text">Нажимая кнопку, вы соглашаетесь с <a href="{{Ссылка на политику}}" target="_blank">политикой конфиденциальности</a>.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОЧЕМУ ЭТО ВАЖНО -->
+    <section id="why">
+        <div class="container">
+            <h2>Один час для здоровья, который сэкономит годы</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i data-lucide="search-check" width="48" height="48"></i>
+                    <h3>Выявление болезней на ранней стадии</h3>
+                    <p>Находите проблемы до того, как они станут серьёзными. Лечение на ранней стадии всегда проще и эффективнее.</p>
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="piggy-bank" width="48" height="48"></i>
+                    <h3>Экономия времени и денег</h3>
+                    <p>Предупредить болезнь гораздо выгоднее, чем лечить её. Бесплатный осмотр — лучшая инвестиция в ваше будущее.</p>
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="heart-handshake" width="48" height="48"></i>
+                    <h3>Забота о себе и близких</h3>
+                    <p>Ваше здоровье — это спокойствие вашей семьи. Когда вы в порядке, ваши родные не тревожатся.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GEMINI FEATURE SECTION -->
+    <section id="gemini-feature">
+        <div class="container text-center">
+            <h2>✨ Узнайте, почему профосмотр важен именно для вас</h2>
+            <p>Ответьте на пару вопросов, и наш умный помощник расскажет, на что обратить внимание. Это анонимно.</p>
+            <form id="gemini-form" class="gemini-form">
+                <div class="form-group">
+                    <label for="age">Ваш возраст</label>
+                    <input type="number" id="age" class="form-control" min="18" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Ваш пол</label>
+                    <select id="gender" class="form-control" required>
+                        <option value="Мужской">Мужской</option>
+                        <option value="Женский">Женский</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="smoking">Курите ли вы?</label>
+                    <select id="smoking" class="form-control" required>
+                        <option value="Да">Да</option>
+                        <option value="Нет">Нет</option>
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label for="activity">Активность</label>
+                    <select id="activity" class="form-control" required>
+                        <option value="Низкая">Низкая (сидячая работа)</option>
+                        <option value="Средняя">Средняя (прогулки, легкие нагрузки)</option>
+                        <option value="Высокая">Высокая (регулярный спорт)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                     <button type="submit" class="btn btn-primary" style="width: 100%;">Получить рекомендацию</button>
+                </div>
+            </form>
+            <div class="loader" id="loader"></div>
+            <div id="gemini-result"></div>
+        </div>
+    </section>
+
+    <!-- ЧТО ВХОДИТ -->
+    <section id="services">
+        <div class="container text-center">
+            <h2>Что входит в профосмотр</h2>
+            <ul class="services-list">
+                <li>Консультация и осмотр терапевта</li>
+                <li>Общий анализ крови и анализ на сахар и холестерин</li>
+                <li>Электрокардиография (ЭКГ)</li>
+                <li>Флюорография лёгких (1 раз в 2 года)</li>
+                <li>Измерение артериального и внутриглазного давления</li>
+                <li>Итоговое заключение и персональные рекомендации</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- КАК ЭТО БЕСПЛАТНО -->
+    <section id="free">
+        <div class="container text-center">
+            <h2>Как это бесплатно?</h2>
+            <p>Профилактический медосмотр проводится бесплатно по полису обязательного медицинского страхования (ОМС) в рамках госпрограммы. Для записи и прохождения вам нужно взять с собой только два документа: <strong>паспорт и полис ОМС</strong>.</p>
+        </div>
+    </section>
+    
+    <!-- КАК ЗАПИСАТЬСЯ -->
+    <section id="steps">
+        <div class="container">
+            <h2>Как записаться — 3 простых шага</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Оставьте заявку на сайте</h3>
+                    <p>Заполните форму, указав ваше имя и телефон. Это займёт меньше минуты.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Мы перезвоним</h3>
+                    <p>Наш администратор свяжется с вами, чтобы подобрать удобное время для визита.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Приходите в клинику</h3>
+                    <p>Приходите в назначенное время с паспортом и полисом ОМС.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="container">
+            <h2>Частые вопросы</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Сколько времени займёт профосмотр?
+                        <i data-lucide="plus" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>В среднем, все процедуры и консультация занимают около 1-1.5 часов. Мы стараемся организовать всё так, чтобы не было очередей.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Что нужно взять с собой?
+                        <i data-lucide="plus" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Только паспорт гражданина РФ и действующий полис ОМС. Больше ничего не требуется.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Можно ли прийти без записи?
+                        <i data-lucide="plus" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Мы настоятельно рекомендуем предварительно записаться. Это позволит нам спланировать ваш визит и избежать ожидания в очереди.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Должен ли работодатель направлять?
+                        <i data-lucide="plus" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Нет, для прохождения профилактического медосмотра по ОМС направление от работодателя не требуется. Это ваша личная инициатива.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section id="contacts">
+        <div class="container">
+            <h2>Контакты</h2>
+            <div class="contacts-grid">
+                <div class="contact-details">
+                    <ul>
+                        <li><i data-lucide="map-pin"></i><span><strong>Адрес:</strong> {{Город}}, {{Адрес}}</span></li>
+                        <li><i data-lucide="phone"></i><span><strong>Телефон:</strong> <a href="tel:{{Телефон}}">{{Телефон}}</a></span></li>
+                        <li><i data-lucide="clock"></i><span><strong>Часы работы:</strong> {{График}}</span></li>
+                    </ul>
+                    <div class="social-buttons">
+                        <a href="{{Ссылка WhatsApp}}" class="btn" style="background-color: #25D366; color: white;" target="_blank"><i data-lucide="message-circle"></i> WhatsApp</a>
+                        <a href="{{Ссылка Telegram}}" class="btn" style="background-color: #0088cc; color: white;" target="_blank"><i data-lucide="send"></i> Telegram</a>
+                    </div>
+                </div>
+                <div class="map-container">
+                     <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A...&amp;source=constructor" width="100%" height="300" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>Сайт носит информационный характер и не заменяет консультацию врача.</p>
+            <p>© 2024 {{Название}}. <a href="{{Ссылка на политику}}">Политика конфиденциальности</a>.</p>
+        </div>
+    </footer>
+
+    <!-- Закрепленная кнопка для мобильных -->
+    <div class="sticky-cta">
+        <a href="#hero" class="btn btn-primary">Записаться бесплатно</a>
+    </div>
+
+    <!-- ОБНОВЛЕННЫЙ HTML ДЛЯ МОДАЛЬНОГО ОКНА -->
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal" class="modal-close-btn">&times;</button>
+            <h3>Спасибо, ваша заявка принята!</h3>
+            <p>Мы скоро свяжемся с вами по номеру <strong id="modal-phone"></strong> для подтверждения записи на имя <strong id="modal-name"></strong>.</p>
+            <p style="margin-top: 15px;"><strong>Это точно ваше имя и ваш номер телефона?</strong></p>
+            
+            <div class="modal-actions">
+                <button id="modal-confirm-btn" class="btn btn-primary">Да, это я. Свяжитесь со мной по телефону</button>
+                <div class="messenger-buttons">
+                    <button id="modal-whatsapp-btn" data-link="{{Ссылка WhatsApp Модал}}" class="btn btn-social whatsapp">
+                        <i data-lucide="message-circle" width="18" height="18"></i> Свяжитесь по WhatsApp
+                    </button>
+                    <button id="modal-telegram-btn" data-link="{{Ссылка Telegram Модал}}" class="btn btn-social telegram">
+                        <i data-lucide="send" width="18" height="18"></i> Свяжитесь по Telegram
+                    </button>
+                </div>
+            </div>
+             <p id="modal-messenger-notice" style="margin-top: 15px; font-weight: 600; display: none;">Если удобно, мы свяжемся с вами в выбранном мессенджере.</p>
+        </div>
+    </div>
+
+
+    <script>
+        // Инициализация иконок Lucide
+        lucide.createIcons();
+
+        // Логика для аккордеона в FAQ
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const wasActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // --- ОБНОВЛЕННАЯ ЛОГИКА ФОРМЫ И МОДАЛЬНОГО ОКНА ---
+        const mainForm = document.getElementById('main-form');
+        const formContainer = document.getElementById('form-container');
+        const modal = document.getElementById('confirmation-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modalName = document.getElementById('modal-name');
+        const modalPhone = document.getElementById('modal-phone');
+        const confirmBtn = document.getElementById('modal-confirm-btn');
+        const whatsappBtn = document.getElementById('modal-whatsapp-btn');
+        const telegramBtn = document.getElementById('modal-telegram-btn');
+        const messengerNotice = document.getElementById('modal-messenger-notice');
+
+        // Функция для показа модального окна
+        const showModal = (name, phone) => {
+            modalName.textContent = name;
+            modalPhone.textContent = phone;
+            modal.classList.add('active');
+        };
+
+        // Функция для скрытия модального окна
+        const hideModal = () => {
+            modal.classList.remove('active');
+        };
+
+        // Функция для отправки данных (заглушка)
+        const submitApplication = (contactPreference = 'phone') => {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            // Здесь будет логика отправки данных на сервер/почту
+            console.log('Заявка подтверждена! Отправка данных:', { 
+                name: name, 
+                phone: phone,
+                contactPreference: contactPreference 
+            });
+            // Заменяем форму на сообщение благодарности
+            formContainer.innerHTML = `<div style="text-align: center; padding: 20px; background-color: #E0F2F1; border-radius: 8px;"><h3>Спасибо!</h3><p>Ваша заявка принята и отправлена. Мы скоро с вами свяжемся.</p></div>`;
+        };
+
+        mainForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('name');
+            const phoneInput = document.getElementById('phone');
+            
+            if (nameInput.value && phoneInput.value) {
+                // Показываем модальное окно с данными
+                showModal(nameInput.value, phoneInput.value);
+            }
+        });
+        
+        confirmBtn.addEventListener('click', () => {
+            submitApplication('phone'); // Отправляем заявку с предпочтением "звонок"
+            hideModal();
+        });
+
+        whatsappBtn.addEventListener('click', function() {
+            submitApplication('WhatsApp'); // Отправляем заявку с предпочтением "WhatsApp"
+            this.innerHTML = 'Ждите, скоро свяжемся';
+            this.disabled = true;
+            telegramBtn.disabled = true;
+            confirmBtn.style.display = 'none'; // Скрываем кнопку "Да, это я"
+            messengerNotice.textContent = "Спасибо! Мы свяжемся с вами в WhatsApp.";
+            messengerNotice.style.display = 'block';
+            
+            // Опционально: открыть чат в новой вкладке
+            // window.open(this.dataset.link, '_blank');
+            
+            setTimeout(hideModal, 2500); // Закрываем окно через 2.5 секунды
+        });
+        
+        telegramBtn.addEventListener('click', function() {
+            submitApplication('Telegram'); // Отправляем заявку с предпочтением "Telegram"
+            this.innerHTML = 'Ждите, скоро свяжемся';
+            this.disabled = true;
+            whatsappBtn.disabled = true;
+            confirmBtn.style.display = 'none'; // Скрываем кнопку "Да, это я"
+            messengerNotice.textContent = "Спасибо! Мы свяжемся с вами в Telegram.";
+            messengerNotice.style.display = 'block';
+
+            // Опционально: открыть чат в новой вкладке
+            // window.open(this.dataset.link, '_blank');
+
+            setTimeout(hideModal, 2500); // Закрываем окно через 2.5 секунды
+        });
+
+
+        // Закрытие модального окна по кнопке и клику на фон
+        closeModalBtn.addEventListener('click', hideModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                hideModal();
+            }
+        });
+
+
+        // --- GEMINI API FEATURE ---
+        const geminiForm = document.getElementById('gemini-form');
+        const resultContainer = document.getElementById('gemini-result');
+        const loader = document.getElementById('loader');
+        const geminiSubmitButton = geminiForm.querySelector('button[type="submit"]');
+
+        async function callGeminiApi(prompt, retries = 3, delay = 1000) {
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return callGeminiApi(prompt, retries - 1, delay * 2);
+                    }
+                    throw new Error(`API error: ${response.statusText}`);
+                }
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    return candidate.content.parts[0].text;
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return callGeminiApi(prompt, retries - 1, delay * 2);
+                }
+                return "К сожалению, не удалось получить рекомендацию. Попробуйте еще раз позже.";
+            }
+        }
+
+        geminiForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const smoking = document.getElementById('smoking').value;
+            const activity = document.getElementById('activity').value;
+
+            loader.style.display = 'block';
+            resultContainer.style.display = 'none';
+            geminiSubmitButton.disabled = true;
+
+            const prompt = `
+                Ты — дружелюбный и ободряющий ассистент на сайте клиники. 
+                Твоя задача — на основе кратких данных о пользователе написать короткую (2-3 предложения) и позитивную рекомендацию, почему ему стоит пройти бесплатный профилактический осмотр. 
+                Не ставь диагнозы и не давай медицинских советов. Не используй медицинский жаргон.
+                Твоя цель — мотивировать, а не напугать. Обращайся к пользователю на "вы".
+                Данные пользователя:
+                - Возраст: ${age}
+                - Пол: ${gender}
+                - Курение: ${smoking}
+                - Уровень физической активности: ${activity}
+                Пример ответа: "В вашем возрасте особенно важно следить за состоянием сердечно-сосудистой системы. Профосмотр — это отличный и простой способ убедиться, что всё в порядке, и получить полезные рекомендации от врача для поддержания активности на долгие годы!"
+                Сгенерируй рекомендацию для указанных данных.
+            `;
+
+            const resultText = await callGeminiApi(prompt);
+            
+            loader.style.display = 'none';
+            resultContainer.innerHTML = `<p>${resultText.replace(/\n/g, '<br>')}</p>`;
+            resultContainer.style.display = 'block';
+            geminiSubmitButton.disabled = false;
+        });
+
+    </script>
+
+</body>
+</html>
