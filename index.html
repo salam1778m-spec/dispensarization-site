@@ -849,7 +849,7 @@
         const geminiSubmitButton = geminiForm.querySelector('button[type="submit"]');
 
         async function callGeminiApi(prompt, retries = 3, delay = 1000) {
-            const apiKey = "AIzaSyCVwCZU5a25aXvmKbxDP04TE1jqChOJzpk"; 
+            const apiKey = API_KEY; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"?key=${apiKey}`;
             const payload = { contents: [{ parts: [{ text: prompt }] }] };
 
