@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO-теги -->
-    <title>Бесплатный профосмотр в {{Городе}} — {{Название}}</title>
+    <title>Бесплатный профосмотр в Ставрополе</title>
     <meta name="description" content="Пройдите бесплатный профилактический медосмотр по полису ОМС в {{Название}}. Оставьте заявку, и мы вам перезвоним!">
     <meta name="keywords" content="профосмотр, медосмотр, диспансеризация, бесплатно, ОМС, {{Город}}, {{Название}}">
 
@@ -195,51 +195,73 @@
             margin-bottom: 10px;
         }
 
-        /* Gemini Feature Section */
-        #gemini-feature {
-            background-color: #E0F2F1;
-        }
-        .gemini-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            align-items: flex-end;
-        }
-        .gemini-form label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            display: block;
-        }
-        #gemini-result {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: var(--bg-white);
-            border-radius: 8px;
-            border-left: 5px solid var(--primary-color);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: left;
-            display: none;
-        }
-        .loader {
-            width: 48px;
-            height: 48px;
-            border: 5px solid var(--primary-color);
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: none;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Стили для новой таблицы */
+        #why-personal {
+            background-color: #F8F9FA;
         }
 
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .health-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-white);
+            font-size: 0.95rem;
+        }
+
+        .health-table th, .health-table td {
+            padding: 20px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .health-table thead th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+
+        .health-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .health-table tbody tr {
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .health-table tbody tr:hover {
+            background-color: #eef8f7;
+        }
+
+        .factor-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .factor-title i {
+            color: var(--primary-color);
+        }
+
+        .health-table p {
+            font-size: 0.9rem;
+            color: #495057;
+            margin-bottom: 0;
+            max-width: 100%;
+            text-align: left;
+        }
 
         /* Блок "Что входит" */
         .services-list {
@@ -462,15 +484,16 @@
         .modal-actions {
             margin-top: 25px;
             display: flex;
-            flex-direction: column; /* Changed to column */
-            align-items: center; /* Center items */
+            flex-direction: column; 
+            align-items: center; 
             gap: 15px;
-            flex-wrap: wrap;
+            width: 100%;
         }
         
         .modal-actions .messenger-buttons {
              display: flex;
              gap: 15px;
+             width: 100%;
         }
 
         .btn-social {
@@ -478,7 +501,9 @@
             text-decoration: none;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            flex-grow: 1;
         }
         .btn-social.whatsapp { background-color: #25D366; }
         .btn-social.whatsapp:hover:not(:disabled) { background-color: #1DA851; }
@@ -488,6 +513,16 @@
             background-color: #6c757d;
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНЫХ КНОПОК */
+        @media (max-width: 480px) {
+            .modal-actions .messenger-buttons {
+                flex-direction: column;
+            }
+            .modal-actions .btn-primary {
+                 width: 100%;
+            }
         }
 
     </style>
@@ -539,44 +574,48 @@
         </div>
     </section>
 
-    <!-- GEMINI FEATURE SECTION -->
-    <section id="gemini-feature">
-        <div class="container text-center">
-            <h2>✨ Узнайте, почему профосмотр важен именно для вас</h2>
-            <p>Ответьте на пару вопросов, и наш умный помощник расскажет, на что обратить внимание. Это анонимно.</p>
-            <form id="gemini-form" class="gemini-form">
-                <div class="form-group">
-                    <label for="age">Ваш возраст</label>
-                    <input type="number" id="age" class="form-control" min="18" max="100" required>
-                </div>
-                <div class="form-group">
-                    <label for="gender">Ваш пол</label>
-                    <select id="gender" class="form-control" required>
-                        <option value="Мужской">Мужской</option>
-                        <option value="Женский">Женский</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="smoking">Курите ли вы?</label>
-                    <select id="smoking" class="form-control" required>
-                        <option value="Да">Да</option>
-                        <option value="Нет">Нет</option>
-                    </select>
-                </div>
-                 <div class="form-group">
-                    <label for="activity">Активность</label>
-                    <select id="activity" class="form-control" required>
-                        <option value="Низкая">Низкая (сидячая работа)</option>
-                        <option value="Средняя">Средняя (прогулки, легкие нагрузки)</option>
-                        <option value="Высокая">Высокая (регулярный спорт)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                     <button type="submit" class="btn btn-primary" style="width: 100%;">Получить рекомендацию</button>
-                </div>
-            </form>
-            <div class="loader" id="loader"></div>
-            <div id="gemini-result"></div>
+    <!-- НОВЫЙ БЛОК С ТАБЛИЦЕЙ -->
+    <section id="why-personal">
+        <div class="container">
+            <h2>Почему профосмотр важен именно для вас</h2>
+            <p class="text-center" style="margin-bottom: 40px;">В зависимости от образа жизни и возраста риски для здоровья меняются. Узнайте, на что стоит обратить внимание.</p>
+            <div class="table-responsive">
+                <table class="health-table">
+                    <thead>
+                        <tr>
+                            <th>Фактор риска</th>
+                            <th>Рекомендации и фокус внимания</th>
+                            <th>Что проверить в первую очередь</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="factor-title"><i data-lucide="zap"></i><span>Низкая физ. активность</span></div>
+                                <p>Сидячий образ жизни, отсутствие регулярных нагрузок.</p>
+                            </td>
+                            <td>Повышается риск проблем с сердцем, сосудами и спиной. Осмотр помогает контролировать "сидячие" риски и вовремя скорректировать образ жизни.</td>
+                            <td>Уровень холестерина и сахара в крови, ЭКГ, консультация терапевта по вопросам нагрузки.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="factor-title"><i data-lucide="smoking"></i><span>Курение</span></div>
+                                <p>Даже несколько сигарет в день — серьезный фактор риска.</p>
+                            </td>
+                            <td>Значительно возрастает риск заболеваний легких и сердца. Профосмотр позволяет выявить ранние изменения, когда отказ от курения наиболее эффективен.</td>
+                            <td>Флюорография, анализ крови, проверка состояния сосудов (ЭКГ, давление).</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <div class="factor-title"><i data-lucide="cake-slice"></i><span>Возраст 40+ лет</span></div>
+                                 <p>Естественные возрастные изменения в организме.</p>
+                            </td>
+                            <td>Организм требует больше внимания. Важно регулярно проверять ключевые показатели, чтобы предотвратить развитие хронических заболеваний и сохранить качество жизни.</td>
+                            <td>Давление, уровень сахара и холестерина, ЭКГ, для женщин — маммография, для мужчин — ПСА-тест.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -748,7 +787,7 @@
             });
         });
 
-        // --- ОБНОВЛЕННАЯ ЛОГИКА ФОРМЫ И МОДАЛЬНОГО ОКНА ---
+        // --- ЛОГИКА ФОРМЫ И МОДАЛЬНОГО ОКНА ---
         const mainForm = document.getElementById('main-form');
         const formContainer = document.getElementById('form-container');
         const modal = document.getElementById('confirmation-modal');
@@ -776,7 +815,7 @@
         const submitApplication = (contactPreference = 'phone') => {
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
-            // Здесь будет логика отправки данных на сервер/почту
+            // Здесь будет логика отправки данных на сервер/почту/в Telegram
             console.log('Заявка подтверждена! Отправка данных:', { 
                 name: name, 
                 phone: phone,
@@ -792,104 +831,45 @@
             const phoneInput = document.getElementById('phone');
             
             if (nameInput.value && phoneInput.value) {
-                // Показываем модальное окно с данными
                 showModal(nameInput.value, phoneInput.value);
             }
         });
         
         confirmBtn.addEventListener('click', () => {
-            submitApplication('phone'); // Отправляем заявку с предпочтением "звонок"
+            submitApplication('phone');
             hideModal();
         });
 
         whatsappBtn.addEventListener('click', function() {
-            submitApplication('WhatsApp'); // Отправляем заявку с предпочтением "WhatsApp"
+            submitApplication('WhatsApp');
             this.innerHTML = 'Ждите, скоро свяжемся';
             this.disabled = true;
             telegramBtn.disabled = true;
-            confirmBtn.style.display = 'none'; // Скрываем кнопку "Да, это я"
+            confirmBtn.style.display = 'none';
             messengerNotice.textContent = "Спасибо! Мы свяжемся с вами в WhatsApp.";
             messengerNotice.style.display = 'block';
-            
-            // Опционально: открыть чат в новой вкладке
-            // window.open(this.dataset.link, '_blank');
-            
-            setTimeout(hideModal, 2500); // Закрываем окно через 2.5 секунды
+            setTimeout(hideModal, 2500);
         });
         
         telegramBtn.addEventListener('click', function() {
-            submitApplication('Telegram'); // Отправляем заявку с предпочтением "Telegram"
+            submitApplication('Telegram');
             this.innerHTML = 'Ждите, скоро свяжемся';
             this.disabled = true;
             whatsappBtn.disabled = true;
-            confirmBtn.style.display = 'none'; // Скрываем кнопку "Да, это я"
+            confirmBtn.style.display = 'none';
             messengerNotice.textContent = "Спасибо! Мы свяжемся с вами в Telegram.";
             messengerNotice.style.display = 'block';
-
-            // Опционально: открыть чат в новой вкладке
-            // window.open(this.dataset.link, '_blank');
-
-            setTimeout(hideModal, 2500); // Закрываем окно через 2.5 секунды
+            setTimeout(hideModal, 2500);
         });
 
-
-        // Закрытие модального окна по кнопке и клику на фон
+        // Закрытие модального окна
         closeModalBtn.addEventListener('click', hideModal);
         modal.addEventListener('click', (event) => {
             if (event.target === modal) {
                 hideModal();
             }
         });
+    </script>
 
-
-        // --- GEMINI API FEATURE ---
-        const geminiForm = document.getElementById('gemini-form');
-        const resultContainer = document.getElementById('gemini-result');
-        const loader = document.getElementById('loader');
-        const geminiSubmitButton = geminiForm.querySelector('button[type="submit"]');
-
-        async function callGeminiApi(age, gender, smoking, activity) {
-    // Теперь мы обращаемся к нашей бессерверной функции, а не к Google напрямую.
-    // Ключа API здесь больше нет!
-    const functionUrl = '/.netlify/functions/get-recommendation'; 
-
-    try {
-        const response = await fetch(functionUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ age, gender, smoking, activity })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Serverless function error: ${response.statusText}`);
-        }
-        
-        const result = await response.json();
-        return result.recommendation;
-
-    } catch (error) {
-        console.error("Error calling serverless function:", error);
-        return "К сожалению, не удалось получить рекомендацию. Попробуйте еще раз позже.";
-    }
-}
-
-// Также нужно немного изменить обработчик отправки формы geminiForm
-geminiForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const age = document.getElementById('age').value;
-    const gender = document.getElementById('gender').value;
-    const smoking = document.getElementById('smoking').value;
-    const activity = document.getElementById('activity').value;
-
-    loader.style.display = 'block';
-    resultContainer.style.display = 'none';
-    geminiSubmitButton.disabled = true;
-
-    // Вызываем нашу новую, безопасную функцию
-    const resultText = await callGeminiApi(age, gender, smoking, activity);
-    
-    loader.style.display = 'none';
-    resultContainer.innerHTML = `<p>${resultText.replace(/\n/g, '<br>')}</p>`;
-    resultContainer.style.display = 'block';
-    geminiSubmitButton.disabled = false;
-});
+</body>
+</html>
