@@ -848,75 +848,48 @@
         const loader = document.getElementById('loader');
         const geminiSubmitButton = geminiForm.querySelector('button[type="submit"]');
 
-        async function callGeminiApi(prompt, retries = 3, delay = 1000) {
-            const apiKey = API_KEY; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"?key=${apiKey}`;
-            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+        async function callGeminiApi(age, gender, smoking, activity) {
+    // Теперь мы обращаемся к нашей бессерверной функции, а не к Google напрямую.
+    // Ключа API здесь больше нет!
+    const functionUrl = '/.netlify/functions/get-recommendation'; 
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    if (response.status === 429 && retries > 0) {
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        return callGeminiApi(prompt, retries - 1, delay * 2);
-                    }
-                    throw new Error(`API error: ${response.statusText}`);
-                }
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    return candidate.content.parts[0].text;
-                } else {
-                    throw new Error("Invalid response structure from API.");
-                }
-            } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                if (retries > 0) {
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    return callGeminiApi(prompt, retries - 1, delay * 2);
-                }
-                return "К сожалению, не удалось получить рекомендацию. Попробуйте еще раз позже.";
-            }
-        }
-
-        geminiForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const age = document.getElementById('age').value;
-            const gender = document.getElementById('gender').value;
-            const smoking = document.getElementById('smoking').value;
-            const activity = document.getElementById('activity').value;
-
-            loader.style.display = 'block';
-            resultContainer.style.display = 'none';
-            geminiSubmitButton.disabled = true;
-
-            const prompt = `
-                Ты — дружелюбный и ободряющий ассистент на сайте клиники. 
-                Твоя задача — на основе кратких данных о пользователе написать короткую (2-3 предложения) и позитивную рекомендацию, почему ему стоит пройти бесплатный профилактический осмотр. 
-                Не ставь диагнозы и не давай медицинских советов. Не используй медицинский жаргон.
-                Твоя цель — мотивировать, а не напугать. Обращайся к пользователю на "вы".
-                Данные пользователя:
-                - Возраст: ${age}
-                - Пол: ${gender}
-                - Курение: ${smoking}
-                - Уровень физической активности: ${activity}
-                Пример ответа: "В вашем возрасте особенно важно следить за состоянием сердечно-сосудистой системы. Профосмотр — это отличный и простой способ убедиться, что всё в порядке, и получить полезные рекомендации от врача для поддержания активности на долгие годы!"
-                Сгенерируй рекомендацию для указанных данных.
-            `;
-
-            const resultText = await callGeminiApi(prompt);
-            
-            loader.style.display = 'none';
-            resultContainer.innerHTML = `<p>${resultText.replace(/\n/g, '<br>')}</p>`;
-            resultContainer.style.display = 'block';
-            geminiSubmitButton.disabled = false;
+    try {
+        const response = await fetch(functionUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ age, gender, smoking, activity })
         });
 
-    </script>
+        if (!response.ok) {
+            throw new Error(`Serverless function error: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        return result.recommendation;
 
-</body>
-</html>
+    } catch (error) {
+        console.error("Error calling serverless function:", error);
+        return "К сожалению, не удалось получить рекомендацию. Попробуйте еще раз позже.";
+    }
+}
+
+// Также нужно немного изменить обработчик отправки формы geminiForm
+geminiForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const smoking = document.getElementById('smoking').value;
+    const activity = document.getElementById('activity').value;
+
+    loader.style.display = 'block';
+    resultContainer.style.display = 'none';
+    geminiSubmitButton.disabled = true;
+
+    // Вызываем нашу новую, безопасную функцию
+    const resultText = await callGeminiApi(age, gender, smoking, activity);
+    
+    loader.style.display = 'none';
+    resultContainer.innerHTML = `<p>${resultText.replace(/\n/g, '<br>')}</p>`;
+    resultContainer.style.display = 'block';
+    geminiSubmitButton.disabled = false;
+});
