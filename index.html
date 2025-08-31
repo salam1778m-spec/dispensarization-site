@@ -807,19 +807,45 @@
             modal.classList.remove('active');
         };
 
-        // Функция для отправки данных (заглушка)
-        const submitApplication = (contactPreference = 'phone') => {
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            // Здесь будет логика отправки данных на сервер/почту/в Telegram
-            console.log('Заявка подтверждена! Отправка данных:', { 
-                name: name, 
-                phone: phone,
-                contactPreference: contactPreference 
-            });
-            // Заменяем форму на сообщение благодарности
-            formContainer.innerHTML = `<div style="text-align: center; padding: 20px; background-color: #E0F2F1; border-radius: 8px;"><h3>Спасибо!</h3><p>Ваша заявка принята и отправлена. Мы скоро с вами свяжемся.</p></div>`;
-        };
+        // ВСТАВЬ сюда свой URL из Google Apps Script (тот, что заканчивается на /exec)
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtjUIM5oVBuj6ur0flNyYKHQILYJRZl8Umsj-BZ3IpPq1JpYN1IB3Aw6cY9LCm93A/exec";
+
+const submitApplication = async (contactPreference = 'phone') => {
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+
+    try {
+        const body = new URLSearchParams({
+            fullname: name,
+            phone: phone,
+            preferred: contactPreference,
+            botcheck: ""
+        }).toString();
+
+        const res = await fetch(WEB_APP_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body
+        });
+
+        const json = await res.json();
+        if (json.ok) {
+            console.log("✅ Заявка успешно отправлена");
+        } else {
+            console.error("❌ Ошибка:", json.error);
+        }
+    } catch (err) {
+        console.error("⚠️ Сбой отправки:", err);
+    }
+
+    // Заменяем форму на сообщение благодарности
+    formContainer.innerHTML = `
+        <div style="text-align: center; padding: 20px; background-color: #E0F2F1; border-radius: 8px;">
+            <h3>Спасибо!</h3>
+            <p>Ваша заявка принята и отправлена. Мы скоро с вами свяжемся.</p>
+        </div>`;
+};
+
 
         mainForm.addEventListener('submit', function(event) {
             event.preventDefault();
