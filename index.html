@@ -373,15 +373,13 @@
             margin-bottom: 15px;
         }
         .map-container {
-            width: 100%;
-            height: 300px;
-            background-color: var(--bg-light);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    width: 100%;
+    max-width: 800px; /* или нужная вам ширина */
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
         
         .social-buttons a {
             margin-right: 10px;
@@ -732,8 +730,15 @@
                     </ul>
                 </div>
                 <div class="map-container">
-                     <iframe src="https://yandex.ru/maps/36/stavropol/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Ставрополь</a><a href="https://yandex.ru/maps/36/stavropol/house/tyulpanovaya_ulitsa_12_2/YEgYfwVoTkcFQFpufXV5dX1hZg==/?ll=41.928722%2C44.984122&utm_medium=mapframe&utm_source=maps&z=16.42" style="color:#eee;font-size:12px;position:absolute;top:14px;">Тюльпановая улица, 12/2 — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=41.928722%2C44.984122&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgozMzE2MTg2NzY1EkvQoNC-0YHRgdC40Y8sINCh0YLQsNCy0YDQvtC_0L7Qu9GMLCDQotGO0LvRjNC_0LDQvdC-0LLQsNGPINGD0LvQuNGG0LAsIDEyLzIiCg0CtydCFb3vM0I%2C&utm_source=chatgpt.com&z=16.42" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
-                </div>
+    <iframe 
+        src="https://yandex.ru/map-widget/v1/?ll=41.928722%2C44.984122&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgozMzE2MTg2NzY1EkvQoNC-0YHRgdC40Y8sINCh0YLQsNCy0YDQvtC_0L7Qu9GMLCDQotGO0LvRjNC_0LDQvdC-0LLQsNGPINGD0LvQuNGG0LAsIDEyLzIiCg0CtydCFb3vM0I%2C&z=16.42" 
+        width="100%" 
+        height="400" 
+        frameborder="0" 
+        allowfullscreen="true" 
+        style="border:0;">
+    </iframe>
+</div>
             </div>
         </div>
     </section>
